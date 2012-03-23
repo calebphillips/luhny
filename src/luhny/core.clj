@@ -22,6 +22,12 @@
       (mod 10)
       zero?))
 
+(defn cc? [s]
+  (let [s (remove #{\- \space} s)]
+    (and
+     (<= 14 (count s) 16)
+     (every? #(Character/isDigit %) s)
+     (luhny? s))))
 
 (defn partition-ignoring
   "Acts like the 3 argument version of partition, except that it 'ignores'
@@ -29,7 +35,9 @@
    but does not count them when building the partition.
    The idea is to use this to divide a sequences of characters up into partitions
    of n characters, not counting spaces and hyphens, but preserving them so that
-   we can spit them back out once we mask any cc numbers"
+   we can spit them back out once we mask any cc numbers
+   A lot of this is copied from the partition function, so there maybe a better
+   way to reuse something existing."
   [n step ignore coll]
   (let [cnt-ignoring #(count (remove ignore %))
         full-partition? #(= n (cnt-ignoring %))
@@ -42,3 +50,4 @@
        (let [p (take-ignoring s)]
          (when (full-partition? p)
            (cons p (partition-ignoring n step ignore (nthnext s step)))))))))
+

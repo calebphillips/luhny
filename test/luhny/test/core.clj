@@ -34,3 +34,10 @@
           ]
          (partition-ignoring 3 1 #{:w :x :y}
                              [1 2 :w :x 3 :y :x 4 5 :w 6]))))
+
+(deftest test-cc?
+  (is (cc? "4563960122001999"))
+  (is (cc? (interleave "4563960122001999"
+                       (repeat \-)
+                       (repeat \space))))
+  (is (not (cc? "ABCABCABCABCABC"))))
