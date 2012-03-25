@@ -59,7 +59,8 @@
   [s]
   (map #(apply str %)
        (filter cc?
-               (partition-ignoring 16 1 #{\- \space} s))))
+               (mapcat #(partition-ignoring % 1 #{\- \space} s)
+                       [14 15 16]))))
 
 (defn mask-cc-num
   "Return the string s with cc replaced with its masked form"

@@ -51,4 +51,7 @@
 (deftest test-mask?
   (is (= "We did some stuff and then went over to the place with that and bought a pizza with XXXXXXXXXXXXXXXX but then I called XXXX XXXX-XXXX XXXX"
          (mask
-          "We did some stuff and then went over to the place with that and bought a pizza with 6011000990139424 but then I called 4012 8888-8888 1881"))))
+          "We did some stuff and then went over to the place with that and bought a pizza with 6011000990139424 but then I called 4012 8888-8888 1881")))
+  (is (= "Hi XXXXXXXXXXXXXX" (mask "Hi 30569309025904")))
+  (is (= "XXXXX XXXXX XXXXX" (mask "37828 22463 10005")))
+  )
