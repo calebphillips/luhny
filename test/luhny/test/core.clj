@@ -19,7 +19,13 @@
 (deftest test-luhny?
   (are [s] (luhny? s)
        "5678"
-       "4563960122001999")
+       "4563960122001999"
+       "378282246310005" ;; Found these in some paypal docs
+       "30569309025904"
+       "6011000990139424"
+       "5555555555554444"
+       "4012888888881881"
+       "5019717010103742")
   (is (not (luhny? "6789"))))
 
 (deftest test-partition-ignoring
@@ -41,3 +47,8 @@
                        (repeat \-)
                        (repeat \space))))
   (is (not (cc? "ABCABCABCABCABC"))))
+
+(deftest test-mask?
+  (is (= "We did some stuff and then went over to the place with that and bought a pizza with XXXXXXXXXXXXXXXX but then I called XXXX XXXX-XXXX XXXX"
+         (mask
+          "We did some stuff and then went over to the place with that and bought a pizza with 6011000990139424 but then I called 4012 8888-8888 1881"))))
