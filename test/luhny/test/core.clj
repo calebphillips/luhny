@@ -22,6 +22,7 @@
        "4563960122001999"
        "378282246310005" ;; Found these in some paypal docs
        "30569309025904"
+       "40000000003030"
        "6011000990139424"
        "5555555555554444"
        "4012888888881881"
@@ -29,14 +30,14 @@
   (is (not (luhny? "6789"))))
 
 (deftest test-partition-ignoring
-  (is (= [[1 2 :w :x 3]
-          [2 :w :x 3 :y :x 4]
-          [:w :x 3 :y :x 4 5]
-          [:x 3 :y :x 4 5]
-          [3 :y :x 4 5]
-          [:y :x 4 5 :w 6]
-          [:x 4 5 :w 6]
-          [4 5 :w 6]
+  (is (= [[[1 2 :w :x 3] 0]
+          [[2 :w :x 3 :y :x 4] 1]
+          [[:w :x 3 :y :x 4 5] 2]
+          [[:x 3 :y :x 4 5] 3]
+          [[3 :y :x 4 5] 4]
+          [[:y :x 4 5 :w 6] 5]
+          [[:x 4 5 :w 6] 6]
+          [[4 5 :w 6] 7]
           ]
          (partition-ignoring 3 1 #{:w :x :y}
                              [1 2 :w :x 3 :y :x 4 5 :w 6]))))
@@ -54,4 +55,6 @@
           "We did some stuff and then went over to the place with that and bought a pizza with 6011000990139424 but then I called 4012 8888-8888 1881")))
   (is (= "Hi XXXXXXXXXXXXXX" (mask "Hi 30569309025904")))
   (is (= "XXXXX XXXXX XXXXX" (mask "37828 22463 10005")))
+  ;; Two overlapping 14 digit numbers
+  (is (= "XXXX XXXX XXXX XX XXXXXXXXXXXXX" (mask "3056 9309 0259 04 0000000003030")))
   )
