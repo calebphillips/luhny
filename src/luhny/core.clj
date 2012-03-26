@@ -1,5 +1,7 @@
 (ns luhny.core
-  (:require [clojure.string :as cs]))
+  (:require [clojure.string :as cs])
+  (:import (java.io BufferedReader))
+  (:gen-class))
 
 (defn str->ints [s]
   (map #(Character/digit % 10) s))
@@ -27,7 +29,7 @@
   (let [s (remove #{\- \space} s)]
     (and
      (<= 14 (count s) 16)
-     (every? #(Character/isDigit %) s)
+     (every? #(Character/isDigit (int %)) s)
      (luhny? s))))
 
 (defn partition-ignoring
@@ -86,3 +88,12 @@
   (reduce (fn [s cc] (mask-cc-num s cc))
           text
           (find-cc-nums text)))
+
+(defn -main [& args]
+  (let [in (apply str (interleave (line-seq (BufferedReader. *in*)) (repeat "\n")))
+        out (mask in)]
+    (.write *out* out)
+    (.write *out* "\n")
+    (.flush *out*)))
+  
+  
