@@ -80,10 +80,10 @@
 (defn mask
   "Takes a string s and returns a string with the credit card numbers masked.
 
-  This is a very simple version so far that does not cover many of the cases
-  listed in the problem spec."
-  [s]
-  (loop [s s ccs (find-cc-nums s)]
-    (if (empty? ccs)
-      s
-      (recur (mask-cc-num s (first ccs)) (rest ccs)))))
+   Takes a pretty brute force approach.  Also does not read streams as the
+   square program expects.
+  "
+  [text]
+  (reduce (fn [s cc] (mask-cc-num s cc))
+          text
+          (find-cc-nums s)))
