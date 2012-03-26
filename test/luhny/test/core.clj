@@ -58,6 +58,4 @@
   ;; Two overlapping 14 digit numbers
   (is (= "XXXX XXXX XXXX XX XXXXXXXXXXXXX" (mask "3056 9309 0259 04 0000000003030")))
   (is (= "LF only ->\n<- LF only" (mask "LF only ->\n<- LF only")))
-  (is (= "987XXXXXXXXXXXXXXXX321" (mask "9875610591081018250321")))
-
-  )
+  (is (= "987XXXXXXXXXXXXXXXX321" (mask "9875610591081018250321"))))

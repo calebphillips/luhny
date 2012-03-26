@@ -1,6 +1,5 @@
 (ns luhny.core
   (:require [clojure.string :as cs])
-  (:import (java.io BufferedReader))
   (:gen-class))
 
 (defn str->ints [s]
@@ -79,21 +78,17 @@
     (str before masked-cc after)))
 
 (defn mask
-  "Takes a string s and returns a string with the credit card numbers masked.
-
-   Takes a pretty brute force approach.  Also does not read streams as the
-   square program expects.
-  "
+  "Takes a string s and returns a string with the credit card numbers masked."
   [text]
   (reduce (fn [s cc] (mask-cc-num s cc))
           text
           (find-cc-nums text)))
 
-(defn -main [& args]
-  (let [in (apply str (interleave (line-seq (BufferedReader. *in*)) (repeat "\n")))
-        out (mask in)]
-    (.write *out* out)
-    (.write *out* "\n")
-    (.flush *out*)))
+(defn -main
+  "Read entire input into memory, mask it and send the result to std out"
+  [& args]
+  (doto *out*
+      (.write (mask (slurp *in*)))
+      (.flush)))
   
   
