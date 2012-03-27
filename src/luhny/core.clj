@@ -24,8 +24,10 @@
       (mod 10)
       zero?))
 
+(def non-numeric-cc-chars #{\- \space})
+
 (defn cc-no-memo? [s]
-  (let [s (remove #{\- \space} s)]
+  (let [s (remove non-numeric-cc-chars s)]
     (and
      (<= 14 (count s) 16)
      (every? #(Character/isDigit (int %)) s)
@@ -67,7 +69,7 @@
    digits, spaces and hyphens."
   [s]
   (filter #(cc? (first %))
-          (mapcat #(partition-ignoring % 1 #{\- \space} s)
+          (mapcat #(partition-ignoring % 1 non-numeric-cc-chars s)
                   [16 15 14])))
 
 (defn mask-cc-num
@@ -86,7 +88,7 @@
           (find-cc-nums text)))
 
 (defn -main
-  "Read each line, mask it and send the result to std out"
+  "Read each line, mask it and send the result to std out."
   [& args]
   (doseq [line (line-seq (clojure.java.io/reader *in*))]
     (doto *out*
