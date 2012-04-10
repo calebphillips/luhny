@@ -8,7 +8,7 @@
 
 (defn double-every-second [coll]
   (map #(%1 %2)
-       (cycle  [identity #(* % 2)])
+       (cycle [identity #(* % 2)])
        (reverse coll)))
 
 (defn ints->digits [coll]
@@ -82,13 +82,12 @@
   "Takes a string and returns a copy of the string with any
   credit card numbers masked."
   [text]
-  (reduce (fn [s cc] (mask-cc-num s cc))
+  (reduce #(mask-cc-num %1 %2)
           text
           (find-cc-nums text)))
 
 (defn -main
   "Read each line, mask it and send the result to std out."
   [& args]
-  (binding [*flush-on-newline* true]
-    (doseq [line (line-seq (jio/reader *in*))]
-      (println (mask line)))))
+  (doseq [line (line-seq (jio/reader *in*))]
+    (println (mask line))))
